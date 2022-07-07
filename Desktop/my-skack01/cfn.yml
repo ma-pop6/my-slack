@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: CloudFormation Main Stack
+
+Parameters:
+ PJPrefix:
+  Type: String
+  Description: Abbreviation for the project (alphanumeric)
+  AllowedPattern: "[0-9a-zA-Z\\-\\_]+"
+
+Resources:
+ DeploymentBucket:
+  Type: 'AWS::S3::Bucket'
+  DeletionPolicy: Retain
+  Properties:
+   BucketName: !Join [ '-', [ !Ref PJPrefix, 'deployment-bucket' ] ]
+   BucketEncryption:
+    ServerSideEncryptionConfiguration:
+     - ServerSideEncryptionByDefault:
+       SSEAlgorithm: AES256
